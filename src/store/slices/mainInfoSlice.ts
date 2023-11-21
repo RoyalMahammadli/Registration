@@ -5,6 +5,7 @@ export const mainInfoSlice = createSlice({
     step1: {
       teyinat: "",
       tesnifat: "",
+      nomenklatur:'',
       konfidensial:false,
       mezmun:''
     },

@@ -4,50 +4,100 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setStep1 } from '../../store/slices/mainInfoSlice';
 import './MyAntStep.css';
+import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
 function MyAntStep() {
     const dispatch = useDispatch()
     const { step1 } = useSelector((store: RootState) => store.mainInfo)
 
     const settingStep1 = (key: string
         , value: any) => {
-        console.log(key, value);
+        // console.log(key, value);
         // @ts-ignore 
         dispatch(setStep1({ key: key, value: value }))
     }
 
+    const setTesnifatWithNomenklatur = (e: any) => {
+        settingStep1('tesnifat', e.target.value)
+        console.log(e.target.value);
+
+        switch (e.target.value) {
+            case 'Digər':
+                settingStep1('nomenklatur', '12.1')
+                break;
+            case 'Göstəriş məktubu':
+                settingStep1('nomenklatur', '12.2')
+                break;
+            case 'Metodiki tövsiyyə':
+                settingStep1('nomenklatur', '12.3')
+                break;
+            default:
+                console.log('nothing will happen');
+        }
+    }
+    const handleSenedeBax = () => {
+        console.log("you clicked mee");
+        alert(`
+            Təsnifat:${step1.tesnifat},
+            Təyinat:${step1.teyinat},
+            Nomenklatur:${step1.nomenklatur},
+            Məzmun:${step1.mezmun}`
+        )
+
+    }
 
     const steps = [
         {
             title: 'Əsas Məlumatlar',
-            teyinat: <select value={step1.teyinat} onChange={(e) => settingStep1("teyinat", e.target.value)}>
+            teyinat: <select placeholder='ss' value={step1.teyinat} onChange={(e) => settingStep1("teyinat", e.target.value)}>
+                <option className={step1.teyinat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
                 <option value='Ümumi'>Ümumi</option>
                 <option value="Apellasiya şurası">Apellasiya şurası</option>
                 <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
             </select>,
-            tesnifat: <select value={step1.tesnifat} onChange={(e) => settingStep1("tesnifat", e.target.value)}>
+            tesnifat: <select value={step1.tesnifat} onChange={setTesnifatWithNomenklatur}>
+                <option className={step1.tesnifat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
                 <option value='Digər'>Digər</option>
                 <option value="Göstəriş məktubu">Göstəriş məktubu</option>
                 <option value="Metodiki tövsiyyə">Metodiki tövsiyyə</option>
             </select>,
             nomenklatur: <select disabled >
-                <option value='Secin'>Seçin</option>
-                <option value="12.1">12.1</option>
+                <option className={step1.tesnifat !== '' ? 'none' : 'block'} selected disabled value=''>Seçin</option>
+                <option selected={step1.tesnifat == 'Digər' ? true : false} value="12.1">12.1</option>
                 <option selected={step1.tesnifat == 'Göstəriş məktubu' ? true : false} value="12.2">12.2</option>
-                <option value="12.3">12.3</option>
+                <option selected={step1.tesnifat == 'Metodiki tövsiyyə' ? true : false} value="12.3">12.3</option>
             </select>,
             konfidensial: <label > <input checked={step1.konfidensial} onChange={(e) => settingStep1('konfidensial', e.target.checked)} type="checkbox" name="" id="" />Konfidensial</label>,
             mezmun: <select value={step1.mezmun} onChange={(e) => settingStep1("mezmun", e.target.value)}>
-                <option value='test'>test</option>
-                <option value="Apellasiya şurası">Apellasiya şurası</option>
-                <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
-            </select>
+                <option className={step1.mezmun !== '' ? 'none' : 'block'} disabled value=''>Daxil edin və ya seçin</option>
+                <option value='test'>Test</option>
+                <option value="test1">Test 1</option>
+                <option value="test2">Test 2</option>
+            </select>,
+            div2: <div>
+                <div className="content">
+                    <h2>Cavablandırılan sənəd</h2>
+                    <button className='green btn'>+ Sənədi seç</button>
+                </div>
+
+                <div className="content">
+                    <h2>Əlaqəli sənədi seç</h2>
+                    <button className='white btn'>+ Sənədi seçin</button>
+                </div>
+
+            </div>
+
         },
+
+
         {
             title: 'Əmr Məlumatları',
             tesnifat: step1.tesnifat,
-            nomenklatura: '',
+            nomenklatur: step1.nomenklatur,
             konfidensial: step1.konfidensial ? "Bəli" : "Xeyr",
-            mezmun: step1.mezmun
+            mezmun: step1.mezmun,
+            div2: <div className='content'>
+                <MyAntAccordion />
+            </div>
 
         },
         {
@@ -114,21 +164,18 @@ function MyAntStep() {
                         {steps[current].mezmun}
                     </div>
                 </div>
-
-
-
+                {current !== 0 && <button
+                    type='button'
+                    onClick={handleSenedeBax}
+                    className='senede_bax'
+                    disabled={(step1.teyinat && step1.tesnifat && step1.nomenklatur && step1.mezmun) ? false : true
+                    }>Sənədə bax</button>}
 
             </div >
+            {steps[current].div2}
 
-            <div className="content">
-                <h2>Cavablandırılan sənəd</h2>
-                <button className='green btn'>+ Sənədi seç</button>
-            </div>
 
-            <div className="content">
-                <h2>Əlaqəli sənədi seç</h2>
-                <button className='white btn'>+ Sənədi seçin</button>
-            </div>
+
 
             {/* Buttons */}
             <div style={{ marginTop: 24 }}>

@@ -2,7 +2,6 @@
   background-color: white;
   margin-top: 1rem;
   padding: 1rem;
-  
 }
 .flex {
   display: flex;
@@ -12,10 +11,10 @@
   margin: 1rem 0;
 }
 .f {
-    display: flex;
-    .konfidensial{
-        margin-left: 5rem;
-    }
+  display: flex;
+  .konfidensial {
+    margin-left: 5rem;
+  }
 }
 select {
   padding: .5rem;
@@ -55,16 +54,44 @@ label {
   background-color: #518863;
   color: white;
 }
-.none{
-    display: none;
+.none {
+  display: none;
 }
-.content-wrap{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.content-wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
-.content2-wrap{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.content2-wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.none {
+  display: none;
+}
+.block {
+  display: block;
+}
+.senede_bax {
+  color: #518863;
+  background-color: white;
+  border: 1px solid #518863;
+  padding: .3rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  transition: .4s all;
+  font-weight: bold;
+}
+.senede_bax:hover {
+  background-color: #518863 ;
+  color: white;
+  cursor: pointer;
+}
+
+
+.senede_bax:disabled{
+  border: 1px solid gray;
+  color: gray;
+  background-color: white;
 }

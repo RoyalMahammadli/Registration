@@ -1,0 +1,32 @@
+:where(.css-dev-only-do-not-override-2i2tap).ant-collapse>.ant-collapse-item >.ant-collapse-header{
+    color: #515bb8;
+    font-weight: bold;
+}
+.sablon_div{
+    display: flex;
+    justify-content: end;
+}
+.sablon{
+    margin-right: 1rem;
+    padding: .3rem;
+    background-color: white;
+    border: 1px solid #518863;
+    border-radius: .5rem;
+    color: #518863;
+    transition: .4s all;
+}
+.sablon:hover{
+    color: white;
+    background-color: #518863;
+    cursor: pointer;
+}
+input{
+    width: 100%;
+    outline: none;
+    border: 1px solid gray;
+    padding: .2rem;
+    margin: .2rem 0 .5rem 0;
+}
+textarea{
+    width: 100%;
+}

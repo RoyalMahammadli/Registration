@@ -30,8 +30,6 @@ function MyAntDrawer() {
 
             >
                 <MyAntStep />
-          
-          
             </Drawer>
         </div>
     )
