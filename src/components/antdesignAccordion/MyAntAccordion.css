@@ -30,3 +30,8 @@ input{
 textarea{
     width: 100%;
 }
+.sablon:disabled{
+    border: 1px solid gray;
+    color: gray;
+    background-color: white;
+}

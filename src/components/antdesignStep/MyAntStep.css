@@ -84,14 +84,41 @@ label {
   font-weight: bold;
 }
 .senede_bax:hover {
-  background-color: #518863 ;
+  background-color: #518863;
   color: white;
   cursor: pointer;
 }
 
-
-.senede_bax:disabled{
+.senede_bax:disabled {
   border: 1px solid gray;
   color: gray;
   background-color: white;
+}
+.apload_sablon {
+  display: flex;
+}
+.apload_sablon > button {
+  margin-left: 1rem;
+}
+h3{
+  margin-top: 1rem;
+}
+.sablon{
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.modalDiv{
+  border: 1px solid red;
+  padding: .5rem;
+}
+.user{
+  display: flex;
+  justify-content: space-between;
+}
+.user .box{
+  border: 1px dashed;
+  padding: .2rem;
 }

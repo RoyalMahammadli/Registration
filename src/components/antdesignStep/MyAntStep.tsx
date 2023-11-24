@@ -1,10 +1,14 @@
-import { Button, message, Steps, theme } from 'antd';
+import { Form, Button, Modal, Steps, message, theme } from 'antd';
 import { useState } from 'react';
+import { IoMdPersonAdd } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setStep1 } from '../../store/slices/mainInfoSlice';
-import './MyAntStep.css';
 import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
+import MyUpload from '../antdesignUpload/MyUpload';
+import './MyAntStep.css';
+import { users } from '../../const';
+
 function MyAntStep() {
     const dispatch = useDispatch()
     const { step1 } = useSelector((store: RootState) => store.mainInfo)
@@ -45,15 +49,54 @@ function MyAntStep() {
 
     }
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleStep4Sec = () => {
+        setIsModalOpen(false)
+
+    }
+
     const steps = [
         {
             title: 'Əsas Məlumatlar',
-            teyinat: <select placeholder='ss' value={step1.teyinat} onChange={(e) => settingStep1("teyinat", e.target.value)}>
-                <option className={step1.teyinat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
-                <option value='Ümumi'>Ümumi</option>
-                <option value="Apellasiya şurası">Apellasiya şurası</option>
-                <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
-            </select>,
+            teyinat: <Form>
+                <Form.Item
+                    name='Seçin'
+                    // label="fullname"
+                    required
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please enter some information'
+                        },
+                        {
+                            type: 'string', message: 'Please enter this'
+                        }
+                    ]}>
+                    <select value={step1.teyinat} onChange={(e) => settingStep1("teyinat", e.target.value)}>
+                        <option className={step1.teyinat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
+                        <option value='Ümumi'>Ümumi</option>
+                        <option value="Apellasiya şurası">Apellasiya şurası</option>
+                        <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
+                    </select>
+                </Form.Item>
+                <Form.Item>
+                    <Button htmlType='submit'>put</Button>
+                </Form.Item> </Form>
+
+            ,
             tesnifat: <select value={step1.tesnifat} onChange={setTesnifatWithNomenklatur}>
                 <option className={step1.tesnifat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
                 <option value='Digər'>Digər</option>
@@ -87,14 +130,12 @@ function MyAntStep() {
             </div>
 
         },
-
-
         {
             title: 'Əmr Məlumatları',
-            tesnifat: step1.tesnifat,
-            nomenklatur: step1.nomenklatur,
+            tesnifat: `:${step1.tesnifat}`,
+            nomenklatur: ` :${step1.nomenklatur}`,
             konfidensial: step1.konfidensial ? "Bəli" : "Xeyr",
-            mezmun: step1.mezmun,
+            mezmun: `:${step1.mezmun}`,
             div2: <div className='content'>
                 <MyAntAccordion />
             </div>
@@ -102,9 +143,55 @@ function MyAntStep() {
         },
         {
             title: 'Elektron Forma',
+            tesnifat: `:${step1.tesnifat}`,
+            nomenklatur: ` :${step1.nomenklatur}`,
+            konfidensial: step1.konfidensial ? "Bəli" : "Xeyr",
+            mezmun: `:${step1.mezmun}`,
+            div2: <div className='content'>
+                <h3>Elektron forma</h3>
+                <div className='apload_sablon'>
+                    <MyUpload />
+                    <button className='sablon'>Skan et</button>
+                </div>
+            </div>
         },
         {
             title: 'Paylanacaqlar Siyahısı',
+            tesnifat: `:${step1.tesnifat}`,
+            nomenklatur: ` :${step1.nomenklatur}`,
+            konfidensial: step1.konfidensial ? "Bəli" : "Xeyr",
+            mezmun: `:${step1.mezmun}`,
+            div2: <div className='content'>
+                <h3>Imzalamaya vermə</h3>
+                <button className='sablon' onClick={showModal}><IoMdPersonAdd /> Əlavə et</button>
+                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                    <div className='modalDiv'>
+                        <div className='user'>
+                            {users?.map(item => {
+                                return (
+                                    <div className="box" key={item.id}>
+                                        <p>Ad:{item.name}</p>
+                                        <p>Vəzife:{item.vezife}</p>
+                                        <p>Vergi Orqanı:{item.vergiOrqan}</p>
+                                        <button onClick={handleStep4Sec} className='sablon'>{item.seç}</button>
+
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className='user'></div>
+                        <div className='user'></div>
+
+                    </div>
+                </Modal>
+
+
+
+                <h3>Vizaya vermə</h3>
+                <button className='sablon'><IoMdPersonAdd /> Əlavə et</button>
+                <h3>Digər strukturla razılaşdırma</h3>
+                <button className='sablon'><IoMdPersonAdd /> Əlavə et</button>
+            </div>
         }
     ];
 
@@ -142,7 +229,7 @@ function MyAntStep() {
             <div className='content' style={contentStyle}>
                 <h2>{steps[current].title}</h2>
                 <div className={current == 0 ? 'flex' : 'none'}>
-                    <p>Təyinatı</p>
+                    <p>Təyinatı</p> <br />
                     {steps[current].teyinat}
                 </div>
                 <div className={current !== 0 ? 'content-wrap' : ''}>
@@ -173,7 +260,6 @@ function MyAntStep() {
 
             </div >
             {steps[current].div2}
-
 
 
 
