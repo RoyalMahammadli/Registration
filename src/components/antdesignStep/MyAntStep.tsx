@@ -71,34 +71,18 @@ function MyAntStep() {
     const steps = [
         {
             title: 'Əsas Məlumatlar',
-            teyinat: <Form>
-                <Form.Item
-                    name='Seçin'
-                    // label="fullname"
-                    required
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter some information'
-                        },
-                        {
-                            type: 'string', message: 'Please enter this'
-                        }
-                    ]}>
-                    <select value={step1.teyinat} onChange={(e) => settingStep1("teyinat", e.target.value)}>
-                        <option className={step1.teyinat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
-                        <option value='Ümumi'>Ümumi</option>
-                        <option value="Apellasiya şurası">Apellasiya şurası</option>
-                        <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
-                    </select>
-                </Form.Item>
-                <Form.Item>
-                    <Button htmlType='submit'>put</Button>
-                </Form.Item> </Form>
+            teyinat:
+
+                <select value={step1.teyinat} onChange={(e) => settingStep1("teyinat", e.target.value)}>
+                    <option selected className={step1.teyinat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
+                    <option value='Ümumi'>Ümumi</option>
+                    <option value="Apellasiya şurası">Apellasiya şurası</option>
+                    <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
+                </select>
 
             ,
             tesnifat: <select value={step1.tesnifat} onChange={setTesnifatWithNomenklatur}>
-                <option className={step1.tesnifat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
+                <option selected className={step1.tesnifat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
                 <option value='Digər'>Digər</option>
                 <option value="Göstəriş məktubu">Göstəriş məktubu</option>
                 <option value="Metodiki tövsiyyə">Metodiki tövsiyyə</option>
@@ -111,7 +95,7 @@ function MyAntStep() {
             </select>,
             konfidensial: <label > <input checked={step1.konfidensial} onChange={(e) => settingStep1('konfidensial', e.target.checked)} type="checkbox" name="" id="" />Konfidensial</label>,
             mezmun: <select value={step1.mezmun} onChange={(e) => settingStep1("mezmun", e.target.value)}>
-                <option className={step1.mezmun !== '' ? 'none' : 'block'} disabled value=''>Daxil edin və ya seçin</option>
+                <option selected className={step1.mezmun !== '' ? 'none' : 'block'} disabled value=''>Daxil edin və ya seçin</option>
                 <option value='test'>Test</option>
                 <option value="test1">Test 1</option>
                 <option value="test2">Test 2</option>
@@ -119,12 +103,12 @@ function MyAntStep() {
             div2: <div>
                 <div className="content">
                     <h2>Cavablandırılan sənəd</h2>
-                    <button className='green btn'>+ Sənədi seç</button>
+                    <button type='button' className='green btn'>+ Sənədi seç</button>
                 </div>
 
                 <div className="content">
                     <h2>Əlaqəli sənədi seç</h2>
-                    <button className='white btn'>+ Sənədi seçin</button>
+                    <button type='button' className='white btn'>+ Sənədi seçin</button>
                 </div>
 
             </div>
@@ -151,7 +135,7 @@ function MyAntStep() {
                 <h3>Elektron forma</h3>
                 <div className='apload_sablon'>
                     <MyUpload />
-                    <button className='sablon'>Skan et</button>
+                    <button type='button' className='sablon'>Skan et</button>
                 </div>
             </div>
         },
@@ -163,7 +147,7 @@ function MyAntStep() {
             mezmun: `:${step1.mezmun}`,
             div2: <div className='content'>
                 <h3>Imzalamaya vermə</h3>
-                <button className='sablon' onClick={showModal}><IoMdPersonAdd /> Əlavə et</button>
+                <button type='button' className='sablon' onClick={showModal}><IoMdPersonAdd /> Əlavə et</button>
                 <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <div className='modalDiv'>
                         <div className='user'>
@@ -173,7 +157,7 @@ function MyAntStep() {
                                         <p>Ad:{item.name}</p>
                                         <p>Vəzife:{item.vezife}</p>
                                         <p>Vergi Orqanı:{item.vergiOrqan}</p>
-                                        <button onClick={handleStep4Sec} className='sablon'>{item.seç}</button>
+                                        <button type='button'  onClick={handleStep4Sec} className='sablon'>{item.seç}</button>
 
                                     </div>
                                 )
@@ -185,12 +169,10 @@ function MyAntStep() {
                     </div>
                 </Modal>
 
-
-
                 <h3>Vizaya vermə</h3>
-                <button className='sablon'><IoMdPersonAdd /> Əlavə et</button>
+                <button type='button'  className='sablon'><IoMdPersonAdd /> Əlavə et</button>
                 <h3>Digər strukturla razılaşdırma</h3>
-                <button className='sablon'><IoMdPersonAdd /> Əlavə et</button>
+                <button type='button'  className='sablon'><IoMdPersonAdd /> Əlavə et</button>
             </div>
         }
     ];
@@ -224,63 +206,120 @@ function MyAntStep() {
 
     return (
         <>
-            <Steps current={current} items={items} onChange={onChange} />
+            <Steps status='error' current={current} items={items} onChange={onChange} />
             <h1>Əsas fəaliyyətlər üzrə əmrlər</h1>
-            <div className='content' style={contentStyle}>
-                <h2>{steps[current].title}</h2>
-                <div className={current == 0 ? 'flex' : 'none'}>
-                    <p>Təyinatı</p> <br />
-                    {steps[current].teyinat}
-                </div>
-                <div className={current !== 0 ? 'content-wrap' : ''}>
+            <Form>
+                <div className='content' style={contentStyle}>
 
-                    <div className={current == 0 ? 'flex' : 'f'}>
-                        <p>Təsnifat</p>
-                        {steps[current].tesnifat}
+                    <h2>{steps[current].title}</h2>
+                    <div className={current == 0 ? 'flex' : 'none'}>
+                        <p>Təyinatı</p> <br />
+                        <Form.Item
+                            // className='form'
+                            name='Təyinat'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please include some information'
+                                },
+                                {
+                                    type: 'string', message: 'Please include'
+                                }
+                            ]}
+                        >
+
+                            {steps[current].teyinat}
+                        </Form.Item>
                     </div>
+                    <div className={current !== 0 ? 'content-wrap' : ''}>
 
-                    <div className={current == 0 ? 'flex' : 'f'}>
-                        <p>Nomenklatur</p>
-                        {steps[current].nomenklatur}
-                        {current !== 0 && <p className='konfidensial'>Konfidensial:</p>}
-                        {steps[current].konfidensial}
+                        <div className={current == 0 ? 'flex' : 'f'}>
+                            <p>Təsnifat</p>
+                            <Form.Item
+
+                                name='Təsnifat'
+                                rules={[
+                                    {
+                                        required: current === 0 ? true : false,
+                                        message: current === 0 ? 'Please include some information' : ''
+                                    },
+                                    {
+                                        type: 'string', message: 'Please include'
+                                    }
+                                ]}
+                            >
+                                {steps[current].tesnifat}
+                            </Form.Item>
+                        </div>
+
+                        <div className={current == 0 ? 'flex' : 'f'}>
+                            <p>Nomenklatur</p>
+                            {steps[current].nomenklatur}
+                            {current !== 0 && <p className='konfidensial'>Konfidensial:</p>}
+                            {steps[current].konfidensial}
+                        </div>
+
+                        <div className={current == 0 ? 'flex' : 'f'}>
+                            <p>Məzmun</p>
+                            <Form.Item
+                                // className='form'
+                                name='Məzmun'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please include some information'
+                                    },
+                                    {
+                                        type: 'string', message: 'Please include'
+                                    }
+                                ]}
+                            >
+                                {steps[current].mezmun}
+                            </Form.Item>
+                        </div>
                     </div>
+                    {current !== 0 && <button
+                        type='button'
+                        onClick={handleSenedeBax}
+                        className='senede_bax'
+                        disabled={(step1.teyinat && step1.tesnifat && step1.nomenklatur && step1.mezmun) ? false : true
+                        }>Sənədə bax</button>}
 
-                    <div className={current == 0 ? 'flex' : 'f'}>
-                        <p>Məzmun</p>
-                        {steps[current].mezmun}
-                    </div>
-                </div>
-                {current !== 0 && <button
-                    type='button'
-                    onClick={handleSenedeBax}
-                    className='senede_bax'
-                    disabled={(step1.teyinat && step1.tesnifat && step1.nomenklatur && step1.mezmun) ? false : true
-                    }>Sənədə bax</button>}
+                </div >
+                {steps[current].div2}
 
-            </div >
-            {steps[current].div2}
+                <Form.Item>
+                    <Button htmlType='submit'>put</Button>
+                </Form.Item>
+            </Form >
 
 
 
             {/* Buttons */}
-            <div style={{ marginTop: 24 }}>
-                {current < steps.length - 1 && (
-                    <Button className='green' onClick={() => next()}>
-                        Davam et
-                    </Button>
-                )}
-                {current === steps.length - 1 && (
-                    <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                        Done
-                    </Button>
-                )}
-                {current > 0 && (
-                    <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-                        Geri
-                    </Button>
-                )}
-            </div>
+            <div style={{ marginTop: 24 }
+            }>
+                {
+                    current < steps.length - 1 && (
+                        <Button className='green' onClick={() => next()}>
+                            Davam et
+                        </Button>
+                    )
+                }
+                {
+                    current === steps.length - 1 && (
+                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                            Done
+                        </Button>
+                    )
+                }
+                {
+                    current > 0 && (
+                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                            Geri
+                        </Button>
+                    )
+                }
+            </div >
         </>
     )
 }

@@ -67,9 +67,7 @@ label {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.none {
-  display: none;
-}
+
 .block {
   display: block;
 }
@@ -121,4 +119,9 @@ h3{
 .user .box{
   border: 1px dashed;
   padding: .2rem;
+}.form{
+  margin-top: 1.5rem;
 }
+/* :where(.css-dev-only-do-not-override-2i2tap).ant-form-item {
+  margin-bottom: 10px;
+} */

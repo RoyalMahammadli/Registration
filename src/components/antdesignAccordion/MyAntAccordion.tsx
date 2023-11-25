@@ -1,12 +1,11 @@
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
 import './MyAntAccordion.css';
-
-import { useState } from "react"
-import { useDispatch, useSelector } from 'react-redux';
-import { setStep2_bendler } from '../../store/slices/mainInfoSlice';
 import { nanoid } from '@reduxjs/toolkit';
+import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import { setStep2_bendler } from '../../store/slices/mainInfoSlice';
 
 
 
@@ -29,8 +28,8 @@ function MyAntAccordion() {
             label: 'Başlıq və əsaslandırma',
             children: <div>
                 <div className='sablon_div'>
-                    <button className='sablon '>+ Şablondan seç</button>
-                    <button className='sablon'> Şablon kimi yadda saxla</button>
+                    <button type='button'  className='sablon '>+ Şablondan seç</button>
+                    <button type='button'  className='sablon'> Şablon kimi yadda saxla</button>
                 </div>
                 <h4>Əmrin məzmunu</h4>
                 <input type="text" placeholder='Type' />
@@ -43,17 +42,17 @@ function MyAntAccordion() {
             label: 'Əmr / Sərəncam / Qərar',
             children: <div>
                 <div className='sablon_div'>
-                    <button className='sablon '>+ Şablondan seç</button>
-                    <button className='sablon'> Şablon kimi yadda saxla</button>
+                    <button type='button'  className='sablon '>+ Şablondan seç</button>
+                    <button type='button'  className='sablon'> Şablon kimi yadda saxla</button>
                 </div>
                 <h4>Bəndin mətni</h4>
                 <textarea onChange={handleArea} rows={7} value={order}> </textarea>
 
                 <div className='sablon_div'>
-                    <button disabled={disableControl} className='sablon '>Imtina et</button>
-                    <button className='sablon'>Dəyiş</button>
+                    <button type='button'  disabled={disableControl} className='sablon '>Imtina et</button>
+                    <button type='button'  className='sablon'>Dəyiş</button>
                     {/* @ts-ignore  */}
-                    <button onClick={handleAdd} disabled={disableControl} className='sablon'>Əlavə et</button>
+                    <button type='button'  onClick={handleAdd} disabled={disableControl} className='sablon'>Əlavə et</button>
                 </div>
                 {bendler.length > 0 && <div style={{ border: "1px solid red", minHeight: "300px" }}>
                     {bendler.map((item: any) => {
@@ -85,8 +84,6 @@ function MyAntAccordion() {
     const onChange = (key: string | string[]) => {
         console.log(key);
     };
-
-
 
     return (
         <>
