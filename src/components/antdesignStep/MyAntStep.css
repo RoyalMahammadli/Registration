@@ -9,11 +9,13 @@
   align-items: center;
   width: 43%;
   margin: 1rem 0;
+  position: relative;
 }
 .f {
   display: flex;
   .konfidensial {
     margin-left: 5rem;
+    
   }
 }
 select {
@@ -25,7 +27,7 @@ select {
 }
 label {
   position: absolute;
-  left: 44%;
+  right: -6rem;
 }
 .btn {
   padding: .6rem 2rem;
@@ -122,6 +124,9 @@ h3{
 }.form{
   margin-top: 1.5rem;
 }
-/* :where(.css-dev-only-do-not-override-2i2tap).ant-form-item {
-  margin-bottom: 10px;
-} */
+.imza-box{
+  background-color: #EFEFF6;
+  padding: 1rem;
+  border-radius: .6rem;
+  margin-top: 1rem;
+}

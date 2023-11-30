@@ -1,17 +1,27 @@
-import { Form, Button, Modal, Steps, message, theme } from 'antd';
+import { Button, Form, Modal, Steps, message, theme } from 'antd';
 import { useState } from 'react';
+import { CiCircleRemove } from "react-icons/ci";
 import { IoMdPersonAdd } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
+import { users } from '../../const';
 import { RootState } from '../../store';
-import { setStep1 } from '../../store/slices/mainInfoSlice';
+import { setStep1, setStep4_imza } from '../../store/slices/mainInfoSlice';
 import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
 import MyUpload from '../antdesignUpload/MyUpload';
 import './MyAntStep.css';
-import { users } from '../../const';
 
 function MyAntStep() {
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+
     const dispatch = useDispatch()
-    const { step1 } = useSelector((store: RootState) => store.mainInfo)
+    const { step1, step4 } = useSelector((store: RootState) => store.mainInfo)
 
     const settingStep1 = (key: string
         , value: any) => {
@@ -63,9 +73,9 @@ function MyAntStep() {
         setIsModalOpen(false);
     };
 
-    const handleStep4Sec = () => {
+    const handleStep4Sec = (item: any) => {
         setIsModalOpen(false)
-
+        dispatch(setStep4_imza(item))
     }
 
     const steps = [
@@ -157,7 +167,7 @@ function MyAntStep() {
                                         <p>Ad:{item.name}</p>
                                         <p>Vəzife:{item.vezife}</p>
                                         <p>Vergi Orqanı:{item.vergiOrqan}</p>
-                                        <button type='button'  onClick={handleStep4Sec} className='sablon'>{item.seç}</button>
+                                        <button type='button' onClick={() => handleStep4Sec(item)} className='sablon'>{item.seç}</button>
 
                                     </div>
                                 )
@@ -168,11 +178,31 @@ function MyAntStep() {
 
                     </div>
                 </Modal>
+                {Object.keys(step4.imzalama).length > 0 && <div className='imza-box'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SAA</th>
+                                <th>Vəzifə</th>
+                                <th><CiCircleRemove /></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>{step4.imzalama.name}</td>
+                                <td>{step4.imzalama.vezife}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>}
 
                 <h3>Vizaya vermə</h3>
-                <button type='button'  className='sablon'><IoMdPersonAdd /> Əlavə et</button>
+                <button type='button' className='sablon'><IoMdPersonAdd /> Əlavə et</button>
                 <h3>Digər strukturla razılaşdırma</h3>
-                <button type='button'  className='sablon'><IoMdPersonAdd /> Əlavə et</button>
+                <button type='button' className='sablon'><IoMdPersonAdd /> Əlavə et</button>
             </div>
         }
     ];
@@ -193,7 +223,7 @@ function MyAntStep() {
         setCurrent(current - 1);
     };
 
-    const items = steps.map((item) => ({ key: item.title, title: item.title }));
+    const items = steps.map((item) => ({ key: item.title, title: item.title, Error: item.tesnifat }));
 
     const contentStyle: React.CSSProperties = {
 
@@ -203,19 +233,23 @@ function MyAntStep() {
         padding: '1rem'
     };
 
-
     return (
         <>
-            <Steps status='error' current={current} items={items} onChange={onChange} />
+            <Steps current={current} items={items} onChange={onChange} />
             <h1>Əsas fəaliyyətlər üzrə əmrlər</h1>
-            <Form>
+            <Form
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete='off'
+                initialValues={{ remember: true }}
+            >
                 <div className='content' style={contentStyle}>
 
                     <h2>{steps[current].title}</h2>
                     <div className={current == 0 ? 'flex' : 'none'}>
-                        <p>Təyinatı</p> <br />
+                        <p>Təyinatı</p>
                         <Form.Item
-                            // className='form'
+                            required
                             name='Təyinat'
                             rules={[
                                 {
@@ -266,8 +300,9 @@ function MyAntStep() {
                                 name='Məzmun'
                                 rules={[
                                     {
-                                        required: true,
-                                        message: 'Please include some information'
+                                        required: current === 0 ? true : false,
+                                        message: current === 0 ? 'Please include some information' : '',
+
                                     },
                                     {
                                         type: 'string', message: 'Please include'
@@ -288,38 +323,39 @@ function MyAntStep() {
                 </div >
                 {steps[current].div2}
 
-                <Form.Item>
-                    <Button htmlType='submit'>put</Button>
-                </Form.Item>
+
+
+
+
+                {/* Buttons */}
+                <div style={{ marginTop: 24 }
+                }>
+                    {
+                        current > 0 && (
+                            <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                                Geri
+                            </Button>
+                        )
+                    }
+                    {
+                        current < steps.length - 1 && (
+                            <Button className='green' onClick={() => next()}>
+                                Davam et
+                            </Button>
+                        )
+                    }
+
+                    {
+                       Object.keys(step4.imzalama).length !== 0 && (
+                            <Form.Item>
+                                <Button htmlType='submit' onClick={() => message.success('Processing complete!')}>
+                                    Qeydiyyata al
+                                </Button>
+                            </Form.Item>
+                        )
+                    }
+                </div >
             </Form >
-
-
-
-            {/* Buttons */}
-            <div style={{ marginTop: 24 }
-            }>
-                {
-                    current < steps.length - 1 && (
-                        <Button className='green' onClick={() => next()}>
-                            Davam et
-                        </Button>
-                    )
-                }
-                {
-                    current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Done
-                        </Button>
-                    )
-                }
-                {
-                    current > 0 && (
-                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-                            Geri
-                        </Button>
-                    )
-                }
-            </div >
         </>
     )
 }

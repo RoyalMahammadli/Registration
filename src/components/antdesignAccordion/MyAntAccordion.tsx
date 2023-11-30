@@ -1,11 +1,12 @@
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
-import './MyAntAccordion.css';
-import { nanoid } from '@reduxjs/toolkit';
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setStep2_bendler } from '../../store/slices/mainInfoSlice';
+import { setStep2_bendler, setStep2_edit, setStep2_remove } from '../../store/slices/mainInfoSlice';
+import './MyAntAccordion.css';
+import { nanoid } from '@reduxjs/toolkit';
 
 
 
@@ -13,14 +14,32 @@ function MyAntAccordion() {
     const dispatch = useDispatch()
     const { bendler } = useSelector((store: RootState) => store.mainInfo.step2)
     const [order, setOrder] = useState<string>("")
-    const handleArea = (e: any) => {
-        setOrder(e.target.value)
-    }
-    const disableControl = order.trim() === "" ? true : false
+    const [change, setChange] = useState<boolean>(true)
+    const ereaRef = useRef<HTMLTextAreaElement | null>(null)
+    const [catchId, setCatchId] = useState<string>("")
 
+
+
+    const handleArea = (e: any) => { setOrder(e.target.value) }
+    const disableControl = order.trim() === "" ? true : false
     const handleAdd = () => {
         dispatch(setStep2_bendler({ id: nanoid(), bend: order }))
         setOrder('')
+    }
+    const handleTableRemover = (id:any) => {
+        dispatch(setStep2_remove(id))
+
+    }
+    const handleSetToInput = (id:string) => {
+        ereaRef.current?.focus()
+        setChange(false)
+        setCatchId(id)
+    
+    }
+    const changeValue = () => {
+        dispatch(setStep2_edit({id:catchId, newValue:order}))
+        setOrder('')
+
     }
     const items: CollapseProps['items'] = [
         {
@@ -28,8 +47,8 @@ function MyAntAccordion() {
             label: 'Başlıq və əsaslandırma',
             children: <div>
                 <div className='sablon_div'>
-                    <button type='button'  className='sablon '>+ Şablondan seç</button>
-                    <button type='button'  className='sablon'> Şablon kimi yadda saxla</button>
+                    <button type='button' className='sablon '>+ Şablondan seç</button>
+                    <button type='button' className='sablon'> Şablon kimi yadda saxla</button>
                 </div>
                 <h4>Əmrin məzmunu</h4>
                 <input type="text" placeholder='Type' />
@@ -42,27 +61,40 @@ function MyAntAccordion() {
             label: 'Əmr / Sərəncam / Qərar',
             children: <div>
                 <div className='sablon_div'>
-                    <button type='button'  className='sablon '>+ Şablondan seç</button>
-                    <button type='button'  className='sablon'> Şablon kimi yadda saxla</button>
+                    <button type='button' className='sablon '>+ Şablondan seç</button>
+                    <button type='button' className='sablon'> Şablon kimi yadda saxla</button>
                 </div>
                 <h4>Bəndin mətni</h4>
-                <textarea onChange={handleArea} rows={7} value={order}> </textarea>
+                <textarea ref={ereaRef} onChange={handleArea} rows={7} value={order}> </textarea>
 
                 <div className='sablon_div'>
-                    <button type='button'  disabled={disableControl} className='sablon '>Imtina et</button>
-                    <button type='button'  className='sablon'>Dəyiş</button>
+                    <button type='button' disabled={disableControl} className='sablon '>Imtina et</button>
+                    <button type='button' onClick={changeValue} disabled={change} className='sablon'>Dəyiş</button>
                     {/* @ts-ignore  */}
-                    <button type='button'  onClick={handleAdd} disabled={disableControl} className='sablon'>Əlavə et</button>
+                    <button type='button' onClick={handleAdd} disabled={disableControl} className='sablon'>Əlavə et</button>
                 </div>
-                {bendler.length > 0 && <div style={{ border: "1px solid red", minHeight: "300px" }}>
-                    {bendler.map((item: any) => {
-                        return (
-                            <div content=''>
-                                {item?.bend}
-                            </div>
-                        )
-                    })}
-                </div>}
+                {bendler.length > 0 && <table>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Bənd</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bendler.map((item: any,index:number) => {
+                            return (
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td ><p >{item?.bend}</p></td>
+                                    <td><button onClick={()=>handleSetToInput(item.id)} className='change_btn' type='button'> <FaPencilAlt /> Dəyişdirmə</button></td>
+                                    <td><button onClick={()=>handleTableRemover(item.id)} className='change_btn' type='button'><FaTrash /> Sil</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>}
             </div>,
         },
         {

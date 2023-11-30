@@ -14,6 +14,7 @@
     border-radius: .5rem;
     color: #518863;
     transition: .4s all;
+    font-weight: bolder;
 }
 .sablon:hover{
     color: white;
@@ -34,4 +35,25 @@ textarea{
     border: 1px solid gray;
     color: gray;
     background-color: white;
+}
+th,td{
+    padding: .5rem;
+    text-align: start;
+    width: 2rem;
+    word-wrap: break-word;
+}
+table{
+    border-collapse:collapse;
+    width: 100%;
+}
+
+thead{
+    background-color: #EFF0F5;
+    border: 1px solid #EFF0F5;
+    width: 100%;
+}
+.change_btn{
+    background-color: white;
+    border: none;
+    cursor: pointer;
 }
