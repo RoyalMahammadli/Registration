@@ -15,7 +15,6 @@
   display: flex;
   .konfidensial {
     margin-left: 5rem;
-    
   }
 }
 select {
@@ -100,33 +99,44 @@ label {
 .apload_sablon > button {
   margin-left: 1rem;
 }
-h3{
+h3 {
   margin-top: 1rem;
 }
-.sablon{
+.sablon {
   height: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
 }
-.modalDiv{
+.modalDiv {
   border: 1px solid red;
   padding: .5rem;
 }
-.user{
+.user {
   display: flex;
   justify-content: space-between;
 }
-.user .box{
+.user .box {
   border: 1px dashed;
   padding: .2rem;
-}.form{
+}
+.form {
   margin-top: 1.5rem;
 }
-.imza-box{
-  background-color: #EFEFF6;
+.imza-box {
+  background-color: #efeff6;
   padding: 1rem;
   border-radius: .6rem;
   margin-top: 1rem;
+}
+.black {
+  background-color: #515767;
+  color: white;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-notification .ant-notification-notice-wrapper .ant-notification-notice-with-icon .ant-notification-notice-message{
+  color: white;
+}
+:where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class*=" ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class*=" ant-notification"]{
+  color: white;
 }

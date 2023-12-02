@@ -1,5 +1,6 @@
-import { Button, Form, Modal, Steps, message, theme } from 'antd';
+import { Button, Form, Modal, Steps, notification, theme } from 'antd';
 import { useState } from 'react';
+import { MdOutlineDownloadDone } from "react-icons/md";
 import { CiCircleRemove } from "react-icons/ci";
 import { IoMdPersonAdd } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
@@ -233,6 +234,19 @@ function MyAntStep() {
         padding: '1rem'
     };
 
+
+    //Notification
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = () => {
+        api.open({
+            message: `237191873419827391823 sənədi qeydiyyata alınıb."Əmr/Sərəncam/Qərar hazırlanması" tapşırığı yaradılıb`,
+            duration: 0,
+            icon: <MdOutlineDownloadDone />,
+            className:'black',
+            btn:<button className='sablon'>Tapşırığı aç</button>
+           
+        });
+    };
     return (
         <>
             <Steps current={current} items={items} onChange={onChange} />
@@ -346,9 +360,10 @@ function MyAntStep() {
                     }
 
                     {
-                       Object.keys(step4.imzalama).length !== 0 && (
+                        Object.keys(step4.imzalama).length !== 0 && (
                             <Form.Item>
-                                <Button htmlType='submit' onClick={() => message.success('Processing complete!')}>
+                                {contextHolder}
+                                <Button htmlType='submit' onClick={openNotification}>
                                     Qeydiyyata al
                                 </Button>
                             </Form.Item>
