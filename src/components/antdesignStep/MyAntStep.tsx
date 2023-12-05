@@ -10,6 +10,7 @@ import { setStep1, setStep4_imza } from '../../store/slices/mainInfoSlice';
 import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
 import MyUpload from '../antdesignUpload/MyUpload';
 import './MyAntStep.css';
+import { Link } from "react-router-dom";
 
 function MyAntStep() {
     const onFinish = (values: any) => {
@@ -242,9 +243,9 @@ function MyAntStep() {
             message: `237191873419827391823 sənədi qeydiyyata alınıb."Əmr/Sərəncam/Qərar hazırlanması" tapşırığı yaradılıb`,
             duration: 0,
             icon: <MdOutlineDownloadDone />,
-            className:'black',
-            btn:<button className='sablon'>Tapşırığı aç</button>
-           
+            className: 'black',
+            btn: <Link to='/dashboard' ><button className='sablon'>Tapşırığı aç</button></Link>
+
         });
     };
     return (

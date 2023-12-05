@@ -17,7 +17,7 @@ function MyAntDrawer() {
         <div >
             <Space>
                 <Button type="primary" onClick={showLargeDrawer}>
-                    Open Large Size (736px)
+                    Task
                 </Button>
             </Space>
             <Drawer
