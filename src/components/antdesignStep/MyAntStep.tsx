@@ -244,7 +244,7 @@ function MyAntStep() {
             duration: 0,
             icon: <MdOutlineDownloadDone />,
             className: 'black',
-            btn: <Link to='/dashboard' ><button className='sablon'>Tapşırığı aç</button></Link>
+            btn: <Link to='/mainInfo' ><button className='sablon'>Tapşırığı aç</button></Link>
 
         });
     };

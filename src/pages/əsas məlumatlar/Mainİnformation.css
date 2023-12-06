@@ -1,0 +1,26 @@
+.mİnfo-1{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 6rem;
+    row-gap: 2rem;
+    margin-top: 1rem;
+}
+.mezmun-div,.sened-div{
+    background-color: #EFEFF6;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: .5rem;
+}
+.sened-div{
+    display: flex;
+    justify-content: space-evenly;
+}
+.sened-box{
+    border-right: 1px solid gray;
+    box-shadow: 2px 1px 2px gray;
+    height: 15rem;
+
+}
+.empty{
+    padding-top: 1.5rem;
+}

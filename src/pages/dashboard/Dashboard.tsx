@@ -12,6 +12,7 @@ function Dashboard() {
           <div className="head-buttons">
             <button>Vizaya göndər</button>
             <button>Digər strukturlarla razılaşdırma</button>
+            <button>Sil</button>
           </div>
         </header>
         <aside>

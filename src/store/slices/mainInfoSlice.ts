@@ -10,6 +10,8 @@ const initialState: myMainInfo = {
     mezmun: ""
   },
   step2: {
+    emrinMezmunu: {},
+    preambula: {},
     bendler: []
   },
   step3: {},
@@ -28,18 +30,21 @@ export const mainInfoSlice = createSlice({
       };
       // localStorage.setItem("step1", JSON.stringify(state.step1));
     },
+    setStep2_emrMezmun: (state: any, action: any) => {
+      state.step2.emrinMezmunu = action.payload;
+    },
+
     setStep2_bendler: (state: any, action: any) => {
       // state.step2={...state.step2, bendler:[...state.step2.bendler, action.payload]}
       state.step2.bendler = [...state.step2.bendler, action.payload];
       console.log(action.payload);
     },
     setStep2_edit: (state: any, action: any) => {
-      state.step2.bendler =state.step2.bendler.map((item:any)=>{
-       if (item.id===action.payload.id){
-          return {...item,bend:action.payload.newValue}
-        }
-        else return item
-      })
+      state.step2.bendler = state.step2.bendler.map((item: any) => {
+        if (item.id === action.payload.id) {
+          return { ...item, bend: action.payload.newValue };
+        } else return item;
+      });
     },
     setStep2_remove: (state: any, action: any) => {
       state.step2.bendler = state.step2.bendler.filter(
@@ -59,4 +64,5 @@ export const {
   setStep2_remove,
   setStep2_edit,
   setStep4_imza,
+  setStep2_emrMezmun
 } = mainInfoSlice.actions;

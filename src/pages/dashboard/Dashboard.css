@@ -27,16 +27,25 @@ header h4 {
   border-radius: .7rem;
   padding: .4rem 1rem;
   border: 1px solid #518762;
-  margin-right: .4rem;
   color: white;
   cursor: pointer;
+  margin-right: .4rem;
 }
-.head-buttons button:last-child {
+.head-buttons button:nth-child(2){
   background-color: transparent;
   border: 1px solid white;
   border-radius: .7rem;
   padding: .4rem 1rem;
   color: white;
+  cursor: pointer;
+  margin-right: .4rem;
+}
+.head-buttons button:last-child {
+  background-color: transparent;
+  border: 1px solid rgb(245, 108, 108);
+  border-radius: .7rem;
+  padding: .4rem 1rem;
+  color: rgb(245, 122, 122);
   cursor: pointer;
 }
 main {

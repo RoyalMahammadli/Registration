@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setStep2_bendler, setStep2_edit, setStep2_remove } from '../../store/slices/mainInfoSlice';
+import { setStep2_bendler, setStep2_edit, setStep2_emrMezmun, setStep2_remove } from '../../store/slices/mainInfoSlice';
 import './MyAntAccordion.css';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -13,10 +13,11 @@ import { nanoid } from '@reduxjs/toolkit';
 function MyAntAccordion() {
     const dispatch = useDispatch()
     const { bendler } = useSelector((store: RootState) => store.mainInfo.step2)
-    const [order, setOrder] = useState<string>("")
+    const [order, setOrder] = useState<string>('')
     const [change, setChange] = useState<boolean>(true)
     const ereaRef = useRef<HTMLTextAreaElement | null>(null)
-    const [catchId, setCatchId] = useState<string>("")
+    const [catchId, setCatchId] = useState<string>('')
+    const [emrMezmun, setEmrMezmun] = useState<string>('')
 
 
 
@@ -26,20 +27,25 @@ function MyAntAccordion() {
         dispatch(setStep2_bendler({ id: nanoid(), bend: order }))
         setOrder('')
     }
-    const handleTableRemover = (id:any) => {
+    const handleTableRemover = (id: any) => {
         dispatch(setStep2_remove(id))
 
     }
-    const handleSetToInput = (id:string) => {
+    const handleSetToInput = (id: string) => {
         ereaRef.current?.focus()
         setChange(false)
         setCatchId(id)
-    
+
     }
     const changeValue = () => {
-        dispatch(setStep2_edit({id:catchId, newValue:order}))
+        dispatch(setStep2_edit({ id: catchId, newValue: order }))
         setOrder('')
 
+    }
+    const handleEmrMezmun = (e:any) => {
+        setEmrMezmun(e.target.value)
+        dispatch(setStep2_emrMezmun(emrMezmun))
+        console.log(emrMezmun)
     }
     const items: CollapseProps['items'] = [
         {
@@ -51,7 +57,7 @@ function MyAntAccordion() {
                     <button type='button' className='sablon'> Şablon kimi yadda saxla</button>
                 </div>
                 <h4>Əmrin məzmunu</h4>
-                <input type="text" placeholder='Type' />
+                <input type="text" placeholder='Type' value={emrMezmun} onChange={handleEmrMezmun} />
                 <h4>Preambula</h4>
                 <textarea placeholder='Type' rows={10}></textarea>
             </div>,
@@ -83,13 +89,13 @@ function MyAntAccordion() {
                         </tr>
                     </thead>
                     <tbody>
-                        {bendler.map((item: any,index:number) => {
+                        {bendler.map((item: any, index: number) => {
                             return (
                                 <tr>
                                     <td>{index + 1}</td>
                                     <td ><p >{item?.bend}</p></td>
-                                    <td><button onClick={()=>handleSetToInput(item.id)} className='change_btn' type='button'> <FaPencilAlt /> Dəyişdirmə</button></td>
-                                    <td><button onClick={()=>handleTableRemover(item.id)} className='change_btn' type='button'><FaTrash /> Sil</button></td>
+                                    <td><button onClick={() => handleSetToInput(item.id)} className='change_btn' type='button'> <FaPencilAlt /> Dəyişdirmə</button></td>
+                                    <td><button onClick={() => handleTableRemover(item.id)} className='change_btn' type='button'><FaTrash /> Sil</button></td>
                                 </tr>
                             )
                         })}

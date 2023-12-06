@@ -1,7 +1,9 @@
-
+import MyAntTab from "../../components/antdesignTab/MyAntTab"
 function Orderİnformation() {
   return (
-    <div>Orderİnformation</div>
+    <div>
+      <MyAntTab />
+    </div>
   )
 }
 

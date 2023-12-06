@@ -36,7 +36,7 @@ function Sidebar() {
                 }}
                 theme="light"
                 mode="inline"
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={['2']}
                 items={[
                     {
                         key: '/mainInfo',
@@ -49,19 +49,19 @@ function Sidebar() {
                         label: 'Əmr məlumatları',
                     },
                     {
-                        key: '/allofices',
+                        key: '/form',
                         icon: <DatabaseOutlined style={{color:'white'}}/>,
                         label: 'Elektron forma',
 
                     },
                     {
-                        key: '/employees',
+                        key: '/list',
                         icon: <DingdingOutlined style={{color:'white'}}/>,
                         label: 'Paylanacaqlar siyahısı',
 
                     },
                     {
-                        key: '/employees',
+                        key: '/history',
                         icon: <FieldTimeOutlined style={{color:'white'}}/>,
                         label: 'Əməliyyatlar tarixçəsi',
 
