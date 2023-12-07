@@ -42,6 +42,9 @@ th,td{
     width: 2rem;
     word-wrap: break-word;
 }
+td{
+    background-color: #FAFAFA;
+}
 table{
     border-collapse:collapse;
     width: 100%;

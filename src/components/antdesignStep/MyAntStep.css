@@ -125,10 +125,9 @@ h3 {
   margin-top: 1.5rem;
 }
 .imza-box {
-  background-color: #efeff6;
   padding: 1rem;
   border-radius: .6rem;
-  margin-top: 1rem;
+  margin-top: .5rem;
 }
 .black {
   background-color: #515767;
@@ -139,4 +138,9 @@ h3 {
 }
 :where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class*=" ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class*=" ant-notification"]{
   color: white;
+}
+.cicircleRemove{
+  font-size: 1.3rem;
+  color: red;
+  cursor: pointer;
 }

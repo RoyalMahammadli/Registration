@@ -26,17 +26,25 @@ export const users: myUserInterface[] = [
   }
 ];
 
-export interface myStep1 {
+export type myStep1 = {
   teyinat: string;
   tesnifat: string;
   konfidensial: boolean;
   nomenklatur: string;
   mezmun: string;
+};
+export type myStep2 = {
+  emrinMezmunu:string,
+  preambula:string,
+  bendler:string[],
+  esas_metn:string
+};
+export type myStep4={
+  imzalama:object
 }
-export interface myMainInfo {
+export type myMainInfo = {
   step1: myStep1;
-  step2: any;
+  step2: myStep2;
   step3: any;
-  step4: any;
-}
-
+  step4: myStep4;
+};

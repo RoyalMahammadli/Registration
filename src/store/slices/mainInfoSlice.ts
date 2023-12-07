@@ -10,9 +10,10 @@ const initialState: myMainInfo = {
     mezmun: ""
   },
   step2: {
-    emrinMezmunu: {},
-    preambula: {},
-    bendler: []
+    emrinMezmunu: "",
+    preambula: "",
+    bendler: [],
+    esas_metn: ""
   },
   step3: {},
   step4: {
@@ -23,37 +24,49 @@ export const mainInfoSlice = createSlice({
   name: "mainInfo",
   initialState,
   reducers: {
-    setStep1: (state: any, action: any) => {
+    setStep1: (state: myMainInfo, action: any) => {
       state.step1 = {
         ...state.step1,
         [action.payload.key]: action.payload.value
       };
-      // localStorage.setItem("step1", JSON.stringify(state.step1));
+      localStorage.setItem("step1", JSON.stringify(state.step1));
     },
-    setStep2_emrMezmun: (state: any, action: any) => {
-      state.step2.emrinMezmunu = action.payload;
+    setStep2_emrMezmun: (state: myMainInfo, { payload }) => {
+      state.step2.emrinMezmunu = payload;
+    },
+    setStep2_preambula: (state: myMainInfo, { payload }) => {
+      state.step2.preambula = payload;
+    },
+    setStep2_esasMetn: (state: myMainInfo, { payload }) => {
+      state.step2.esas_metn = payload;
     },
 
-    setStep2_bendler: (state: any, action: any) => {
+    setStep2_bendler: (state: myMainInfo, action: any) => {
       // state.step2={...state.step2, bendler:[...state.step2.bendler, action.payload]}
       state.step2.bendler = [...state.step2.bendler, action.payload];
       console.log(action.payload);
     },
-    setStep2_edit: (state: any, action: any) => {
+    setStep2_edit: (state: myMainInfo, action: any) => {
       state.step2.bendler = state.step2.bendler.map((item: any) => {
         if (item.id === action.payload.id) {
           return { ...item, bend: action.payload.newValue };
         } else return item;
       });
     },
-    setStep2_remove: (state: any, action: any) => {
+    setStep2_remove: (state: myMainInfo, { payload }) => {
       state.step2.bendler = state.step2.bendler.filter(
-        (item: any) => item.id !== action.payload
+        (item: any) => item.id !== payload
       );
-      console.log(action.payload);
     },
-    setStep4_imza: (state: any, action: any) => {
-      state.step4.imzalama = action.payload;
+    setStep4_imza: (state: myMainInfo, { payload }) => {
+      state.step4.imzalama = payload;
+    },
+    setStep4_RemoveImza: (state: myMainInfo, { payload }) => {
+      state.step4.imzalama = Object.keys(
+        state.step4.imzalama
+      ).filter((item: any) => {
+        item.id !== payload;
+      });
     }
   }
 });
@@ -64,5 +77,8 @@ export const {
   setStep2_remove,
   setStep2_edit,
   setStep4_imza,
-  setStep2_emrMezmun
+  setStep2_emrMezmun,
+  setStep2_preambula,
+  setStep2_esasMetn,
+  setStep4_RemoveImza
 } = mainInfoSlice.actions;

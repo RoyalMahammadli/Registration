@@ -6,7 +6,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { users } from '../../const';
 import { RootState } from '../../store';
-import { setStep1, setStep4_imza } from '../../store/slices/mainInfoSlice';
+import { setStep1, setStep4_RemoveImza, setStep4_imza } from '../../store/slices/mainInfoSlice';
 import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
 import MyUpload from '../antdesignUpload/MyUpload';
 import './MyAntStep.css';
@@ -78,6 +78,9 @@ function MyAntStep() {
     const handleStep4Sec = (item: any) => {
         setIsModalOpen(false)
         dispatch(setStep4_imza(item))
+    }
+    const handleRemoveImza = (id: number) => {
+        dispatch(setStep4_RemoveImza(id))
     }
 
     const steps = [
@@ -186,7 +189,11 @@ function MyAntStep() {
                             <tr>
                                 <th>SAA</th>
                                 <th>Vəzifə</th>
-                                <th><CiCircleRemove /></th>
+                                <th>Vəzifə orqanı</th>
+                                <th>Qeyd</th>
+                                <th>Status</th>
+                                <th>Tarix</th>
+                                <th ><CiCircleRemove className='cicircleRemove' onClick={handleRemoveImza} /></th>
 
                             </tr>
                         </thead>
@@ -195,6 +202,10 @@ function MyAntStep() {
                             <tr>
                                 <td>{step4.imzalama.name}</td>
                                 <td>{step4.imzalama.vezife}</td>
+                                <td>{step4.imzalama.vergiOrqan}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>

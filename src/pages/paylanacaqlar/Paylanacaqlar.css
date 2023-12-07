@@ -1,0 +1,19 @@
+th,td{
+    padding: .5rem;
+    text-align: start;
+    width: 2rem;
+    word-wrap: break-word;
+}
+td{
+    background-color: #FAFAFA;
+}
+table{
+    border-collapse:collapse;
+    width: 100%;
+}
+
+thead{
+    background-color: #EFF0F5;
+    border: 1px solid #EFF0F5;
+    width: 100%;
+}
