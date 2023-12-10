@@ -1,16 +1,16 @@
 import { Button, Form, Modal, Steps, notification, theme } from 'antd';
 import { useState } from 'react';
-import { MdOutlineDownloadDone } from "react-icons/md";
 import { CiCircleRemove } from "react-icons/ci";
 import { IoMdPersonAdd } from "react-icons/io";
+import { MdOutlineDownloadDone } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
 import { users } from '../../const';
 import { RootState } from '../../store';
 import { setStep1, setStep4_RemoveImza, setStep4_imza } from '../../store/slices/mainInfoSlice';
 import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
 import MyUpload from '../antdesignUpload/MyUpload';
 import './MyAntStep.css';
-import { Link } from "react-router-dom";
 
 function MyAntStep() {
     const onFinish = (values: any) => {
@@ -23,7 +23,7 @@ function MyAntStep() {
 
 
     const dispatch = useDispatch()
-    const { step1, step4 } = useSelector((store: RootState) => store.mainInfo)
+    const { step1, step2, step4 } = useSelector((store: RootState) => store.mainInfo)
 
     const settingStep1 = (key: string
         , value: any) => {
@@ -82,6 +82,24 @@ function MyAntStep() {
     const handleRemoveImza = (id: number) => {
         dispatch(setStep4_RemoveImza(id))
     }
+    const { token } = theme.useToken();
+    const [current, setCurrent] = useState(0);
+    const onChange = (value: number) => {
+        console.log('onChange', value)
+        setCurrent(value)
+
+    }
+
+    const next = () => {
+        setCurrent(current + 1);
+    };
+
+    const prev = () => {
+        setCurrent(current - 1);
+    };
+
+
+
 
     const steps = [
         {
@@ -126,7 +144,8 @@ function MyAntStep() {
                     <button type='button' className='white btn'>+ Sənədi seçin</button>
                 </div>
 
-            </div>
+            </div>,
+            status: current !== 0 && step1.teyinat==='' ? 'wait' : 'process'
 
         },
         {
@@ -137,7 +156,8 @@ function MyAntStep() {
             mezmun: `:${step1.mezmun}`,
             div2: <div className='content'>
                 <MyAntAccordion />
-            </div>
+            </div>,
+             status: current === 1 ? 'process' : 'wait'
 
         },
         {
@@ -152,7 +172,8 @@ function MyAntStep() {
                     <MyUpload />
                     <button type='button' className='sablon'>Skan et</button>
                 </div>
-            </div>
+            </div>,
+             status: current === 2 ? 'process' : 'wait'
         },
         {
             title: 'Paylanacaqlar Siyahısı',
@@ -216,27 +237,12 @@ function MyAntStep() {
                 <button type='button' className='sablon'><IoMdPersonAdd /> Əlavə et</button>
                 <h3>Digər strukturla razılaşdırma</h3>
                 <button type='button' className='sablon'><IoMdPersonAdd /> Əlavə et</button>
-            </div>
+            </div>,
+             status: current === 3 ? 'process' : 'wait'
         }
     ];
 
-    const { token } = theme.useToken();
-    const [current, setCurrent] = useState(0);
-    const onChange = (value: number) => {
-        console.log('onChange', value)
-        setCurrent(value)
-
-    }
-
-    const next = () => {
-        setCurrent(current + 1);
-    };
-
-    const prev = () => {
-        setCurrent(current - 1);
-    };
-
-    const items = steps.map((item) => ({ key: item.title, title: item.title, Error: item.tesnifat }));
+    const items = steps.map((item) => ({ key: item.title, title: item.title, status: item.status }));
 
     const contentStyle: React.CSSProperties = {
 
@@ -246,18 +252,27 @@ function MyAntStep() {
         padding: '1rem'
     };
 
-
     //Notification
     const [api, contextHolder] = notification.useNotification();
     const openNotification = () => {
-        api.open({
-            message: `237191873419827391823 sənədi qeydiyyata alınıb."Əmr/Sərəncam/Qərar hazırlanması" tapşırığı yaradılıb`,
-            duration: 0,
-            icon: <MdOutlineDownloadDone />,
-            className: 'black',
-            btn: <Link to='/mainInfo' ><button className='sablon'>Tapşırığı aç</button></Link>
+        if (step1.teyinat !== ''
+            && step1.tesnifat !== ''
+            && step1.mezmun !== ''
+            && step2.emrinMezmunu !== ''
+            && step2.preambula !== ''
+            && step2.bendler.length !== 0
+        ) {
+            api.open({
+                message: `237191873419827391823 sənədi qeydiyyata alınıb."Əmr/Sərəncam/Qərar hazırlanması" tapşırığı yaradılıb`,
+                duration: 0,
+                icon: <MdOutlineDownloadDone />,
+                className: 'black',
+                btn: <Link to='/mainInfo' ><button className='sablon'>Tapşırığı aç</button></Link>
 
-        });
+            });
+        } else {
+            alert("Enter the required inputs")
+        }
     };
     return (
         <>

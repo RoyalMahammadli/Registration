@@ -13,6 +13,7 @@ import { nanoid } from '@reduxjs/toolkit';
 function MyAntAccordion() {
     const dispatch = useDispatch()
     const { bendler, emrinMezmunu, preambula, esas_metn } = useSelector((store: RootState) => store.mainInfo.step2)
+    // const [order, setOrder] = useState<string>('')
     const [order, setOrder] = useState<string>('')
     const [change, setChange] = useState<boolean>(true)
     const ereaRef = useRef<HTMLTextAreaElement | null>(null)
