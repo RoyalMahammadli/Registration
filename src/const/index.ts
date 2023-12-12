@@ -1,4 +1,4 @@
-export interface myUserInterface {
+export type myUserInterface= {
   [key: string]: string;
 }
 
@@ -40,7 +40,7 @@ export type myStep2 = {
   esas_metn:string
 };
 export type myStep4={
-  imzalama:object
+  imzalama:any
 }
 export type myMainInfo = {
   step1: myStep1;

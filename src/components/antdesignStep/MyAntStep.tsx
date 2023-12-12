@@ -5,7 +5,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import { users } from '../../const';
+import { myStep1, myStep2, myStep4, users } from '../../const';
 import { RootState } from '../../store';
 import { setStep1, setStep4_RemoveImza, setStep4_imza } from '../../store/slices/mainInfoSlice';
 import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
@@ -89,7 +89,6 @@ function MyAntStep() {
         setCurrent(value)
 
     }
-
     const next = () => {
         setCurrent(current + 1);
     };
@@ -98,7 +97,44 @@ function MyAntStep() {
         setCurrent(current - 1);
     };
 
+    // STEP1 STATUS CONTROL ---wait,process,finish
+    const controlStep1 = (object: myStep1, currentStep: number) => {
+        const empty = Object.values(object).some((item: string | boolean) => item == '')
+        const finish = Object.values(object).every((item: string | boolean) => item !== '')
+        if (currentStep != 0 && empty) {
+            return 'wait'
+        } else if (currentStep != 0 && finish) {
+            return 'finish'
+        } else if (currentStep == 0) {
+            return 'process'
+        }
+    }
 
+    // STEP2 STATUS CONTROL ---wait,process,finish
+    const controlStep2 = (object: myStep2, currentStep: number) => {
+        const empty = Object.values(object).some((item: string | string[]) => item == '' || item.length == 0)
+        const finish = Object.values(object).every((item: string | string[]) => item !== '' || item.length != 0)
+        if (currentStep != 1 && empty) {
+            return 'wait'
+        } else if (currentStep != 1 && finish) {
+            return 'finish'
+        } else if (currentStep == 1) {
+            return 'process'
+        }
+    }
+
+    // STEP4 STATUS CONTROL ---wait,process,finish
+    const controlStep4 = (object: myStep4, currentStep: number) => {
+        const empty = Object.keys(object.imzalama).length == 0
+        const finish = Object.entries(object.imzalama).length > 0
+        if (currentStep != 3 && empty) {
+            return 'wait'
+        } else if (currentStep != 3 && finish) {
+            return 'finish'
+        } else if (currentStep == 3) {
+            return 'process'
+        }
+    }
 
 
     const steps = [
@@ -145,7 +181,7 @@ function MyAntStep() {
                 </div>
 
             </div>,
-            status: current !== 0 && step1.teyinat==='' ? 'wait' : 'process'
+            status: controlStep1(step1, current)
 
         },
         {
@@ -157,7 +193,7 @@ function MyAntStep() {
             div2: <div className='content'>
                 <MyAntAccordion />
             </div>,
-             status: current === 1 ? 'process' : 'wait'
+            status: controlStep2(step2, current)
 
         },
         {
@@ -173,7 +209,7 @@ function MyAntStep() {
                     <button type='button' className='sablon'>Skan et</button>
                 </div>
             </div>,
-             status: current === 2 ? 'process' : 'wait'
+            status: current === 2 ? 'process' : 'finish'
         },
         {
             title: 'Paylanacaqlar Siyahısı',
@@ -238,7 +274,7 @@ function MyAntStep() {
                 <h3>Digər strukturla razılaşdırma</h3>
                 <button type='button' className='sablon'><IoMdPersonAdd /> Əlavə et</button>
             </div>,
-             status: current === 3 ? 'process' : 'wait'
+            status: controlStep4(step4, current)
         }
     ];
 
