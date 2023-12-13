@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
-import './Dashboard.css'
 import Sidebar from "../../components/layout/sidebar/Sidebar"
 import Routing from "../../routes/Routing"
+import './Dashboard.css'
 
 function Dashboard() {
   return (

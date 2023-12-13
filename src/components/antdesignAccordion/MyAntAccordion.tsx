@@ -9,51 +9,54 @@ import { setStep2_bendler, setStep2_edit, setStep2_emrMezmun, setStep2_esasMetn,
 import './MyAntAccordion.css';
 
 
-
 function MyAntAccordion() {
-    const dispatch = useDispatch()
-    const { bendler, emrinMezmunu, preambula, esas_metn } = useSelector((store: RootState) => store.mainInfo.step2)
-    // const [order, setOrder] = useState<string>('')
     const [order, setOrder] = useState<string>('')
     const [change, setChange] = useState<boolean>(true)
     const ereaRef = useRef<HTMLTextAreaElement | null>(null)
     const [catchId, setCatchId] = useState<string>('')
-
-
-
-
-    const handleArea = (e: any) => { setOrder(e.target.value) }
-    const disableControl = order.trim() === "" ? true : false
+    const dispatch = useDispatch()
+    const { bendler, emrinMezmunu, preambula, esas_metn } = useSelector((store: RootState) => store.mainInfo.step2)
+    //Add value to the array
     const handleAdd = () => {
         dispatch(setStep2_bendler({ id: nanoid(), bend: order }))
         setOrder('')
     }
+    //Remove table row
     const handleTableRemover = (id: any) => {
         dispatch(setStep2_remove(id))
-
     }
+    //Focus to the Bendin metni
     const handleSetToInput = (id: string) => {
         ereaRef.current?.focus()
         setChange(false)
         setCatchId(id)
-
     }
+    //Change table info
     const changeValue = () => {
         dispatch(setStep2_edit({ id: catchId, newValue: order }))
         setOrder('')
-
     }
+    //Getting Bendin metni
+    const handleArea = (e: any) => { setOrder(e.target.value) }
+    //Getting Emrin mezmunu value
     const handleEmrMezmun = (e: any) => {
         dispatch(setStep2_emrMezmun(e.target.value))
     }
+    //Getting Preambula value
     const handlePreambula = (e: any) => {
         dispatch(setStep2_preambula(e.target.value))
     }
+    //Getting Metn value
     const handleEsasMetn = (e: any) => {
         dispatch(setStep2_esasMetn(e.target.value))
     }
+    //Control button enable
+    const disableControl = order.trim() === "" ? true : false
 
-
+    //Ant accardion control
+    const onChange = (key: string | string[]) => {
+        console.log(key);
+    };
     const items: CollapseProps['items'] = [
         {
             key: '1',
@@ -114,7 +117,7 @@ function MyAntAccordion() {
             key: '3',
             label: 'Tapşırıq',
             children: <div className='content'>
-                <Empty/>
+                <Empty />
             </div>
         },
         {
@@ -126,21 +129,12 @@ function MyAntAccordion() {
             </div>
         }
     ];
-
-
-    const onChange = (key: string | string[]) => {
-        console.log(key);
-    };
-
     return (
         <>
             <Collapse items={items} onChange={onChange} />
-
         </>
-
     )
 }
-
 export default MyAntAccordion
 
 

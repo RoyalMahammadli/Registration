@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import './Mainİnformation.css';
 
-
 function Mainİnformation() {
   const { step1 } = useSelector((store: RootState) => store.mainInfo)
   type mainInfoType = {

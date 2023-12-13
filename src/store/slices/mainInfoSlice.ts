@@ -24,6 +24,7 @@ export const mainInfoSlice = createSlice({
   name: "mainInfo",
   initialState,
   reducers: {
+    //Pushing step1 information
     setStep1: (state: myMainInfo, action: any) => {
       state.step1 = {
         ...state.step1,
@@ -31,21 +32,25 @@ export const mainInfoSlice = createSlice({
       };
       localStorage.setItem("step1", JSON.stringify(state.step1));
     },
+    //Pushing step2 Emrin mezmunu
     setStep2_emrMezmun: (state: myMainInfo, { payload }) => {
       state.step2.emrinMezmunu = payload;
     },
+    //Pushing step2 Preambula
     setStep2_preambula: (state: myMainInfo, { payload }) => {
       state.step2.preambula = payload;
     },
+    //Pushing step2 Esas- metn
     setStep2_esasMetn: (state: myMainInfo, { payload }) => {
       state.step2.esas_metn = payload;
     },
-
+    //Pushing step2  bend to table
     setStep2_bendler: (state: myMainInfo, action: any) => {
       // state.step2={...state.step2, bendler:[...state.step2.bendler, action.payload]}
       state.step2.bendler = [...state.step2.bendler, action.payload];
       console.log(action.payload);
     },
+    //Change step2 table to the new value
     setStep2_edit: (state: myMainInfo, action: any) => {
       state.step2.bendler = state.step2.bendler.map((item: any) => {
         if (item.id === action.payload.id) {
@@ -53,14 +58,17 @@ export const mainInfoSlice = createSlice({
         } else return item;
       });
     },
+    //Remove step2 table info
     setStep2_remove: (state: myMainInfo, { payload }) => {
       state.step2.bendler = state.step2.bendler.filter(
         (item: any) => item.id !== payload
       );
     },
+    // Pushing step4 info to the object
     setStep4_imza: (state: myMainInfo, { payload }) => {
       state.step4.imzalama = payload;
     },
+    //Remove info from object
     setStep4_RemoveImza: (state: myMainInfo, { payload }) => {
       state.step4.imzalama = Object.keys(
         state.step4.imzalama

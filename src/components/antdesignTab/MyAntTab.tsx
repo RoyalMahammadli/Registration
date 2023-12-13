@@ -1,5 +1,5 @@
 import type { TabsProps } from 'antd';
-import { Tabs, Empty } from 'antd';
+import { Empty, Tabs } from 'antd';
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import './MyAntTab.css';
@@ -54,21 +54,19 @@ function MyAntTab() {
         {
             key: '3',
             label: 'Tapşırıq',
-            children: <Empty/> ,
+            children: <Empty />,
         },
         {
             key: '4',
             label: 'Əsas',
-            children: 
-            <div className='esas_metn'>
-                {step2.esas_metn}
-            </div>,
+            children:
+                <div className='esas_metn'>
+                    {step2.esas_metn}
+                </div>,
         },
     ];
     return (
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     )
 }
-
-
 export default MyAntTab;

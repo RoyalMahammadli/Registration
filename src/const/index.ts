@@ -1,7 +1,6 @@
-export type myUserInterface= {
+export type myUserInterface = {
   [key: string]: string;
-}
-
+};
 export const users: myUserInterface[] = [
   {
     name: "Hüseynov Nihad",
@@ -25,7 +24,6 @@ export const users: myUserInterface[] = [
     id: "3"
   }
 ];
-
 export type myStep1 = {
   teyinat: string;
   tesnifat: string;
@@ -34,14 +32,14 @@ export type myStep1 = {
   mezmun: string;
 };
 export type myStep2 = {
-  emrinMezmunu:string,
-  preambula:string,
-  bendler:string[],
-  esas_metn:string
+  emrinMezmunu: string;
+  preambula: string;
+  bendler: string[];
+  esas_metn: string;
 };
-export type myStep4={
-  imzalama:any
-}
+export type myStep4 = {
+  imzalama: any;
+};
 export type myMainInfo = {
   step1: myStep1;
   step2: myStep2;

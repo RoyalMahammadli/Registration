@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom"
-import Index from "../pages/index/Index"
-import Mainİnformation from "../pages/əsas məlumatlar/Mainİnformation"
-import Orderİnformation from "../pages/əmr məlumatlar/Orderİnformation"
 import ElektronForma from "../pages/ElektronForma"
+import Index from "../pages/index/Index"
 import Paylanacaqlar from "../pages/paylanacaqlar/Paylanacaqlar"
+import Orderİnformation from "../pages/əmr məlumatlar/Orderİnformation"
+import Mainİnformation from "../pages/əsas məlumatlar/Mainİnformation"
 
 function Routing() {
   return (

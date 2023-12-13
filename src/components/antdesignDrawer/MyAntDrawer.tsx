@@ -5,14 +5,8 @@ import './MyAntDrawer.css';
 
 function MyAntDrawer() {
     const [open, setOpen] = useState(false);
-
-    const showLargeDrawer = () => {
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
+    const showLargeDrawer = () => { setOpen(true) };
+    const onClose = () => { setOpen(false) };
     return (
         <div >
             <Space>
@@ -27,7 +21,6 @@ function MyAntDrawer() {
                 onClose={onClose}
                 open={open}
                 width='70rem'
-
             >
                 <MyAntStep />
             </Drawer>

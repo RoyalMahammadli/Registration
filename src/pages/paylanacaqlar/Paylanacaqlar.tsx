@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
-import './Paylanacaqlar.css'
 import { RootState } from '../../store'
+import './Paylanacaqlar.css'
 
 function Paylanacaqlar() {
     const { imzalama } = useSelector((state: RootState) => state.mainInfo.step4)
@@ -15,11 +15,9 @@ function Paylanacaqlar() {
                         <th>Qeyd</th>
                         <th>Status</th>
                         <th>Tarix</th>
-
                     </tr>
                 </thead>
                 <tbody>
-
                     <tr>
                         <td>{imzalama.name}</td>
                         <td>{imzalama.vezife}</td>

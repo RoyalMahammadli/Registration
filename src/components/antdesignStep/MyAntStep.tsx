@@ -13,25 +13,19 @@ import MyUpload from '../antdesignUpload/MyUpload';
 import './MyAntStep.css';
 
 function MyAntStep() {
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
-
+    const [current, setCurrent] = useState<number>(0);
+    const [error, setError] = useState<boolean>(false)
     const dispatch = useDispatch()
     const { step1, step2, step4 } = useSelector((store: RootState) => store.mainInfo)
 
+    // Getting step1 information
     const settingStep1 = (key: string
         , value: any) => {
-        // console.log(key, value);
         // @ts-ignore 
         dispatch(setStep1({ key: key, value: value }))
     }
 
+    // Set Nomenklatur to Tesnifat
     const setTesnifatWithNomenklatur = (e: any) => {
         settingStep1('tesnifat', e.target.value)
         console.log(e.target.value);
@@ -50,6 +44,7 @@ function MyAntStep() {
                 console.log('nothing will happen');
         }
     }
+    // Alert for senede bax
     const handleSenedeBax = () => {
         console.log("you clicked mee");
         alert(`
@@ -60,53 +55,49 @@ function MyAntStep() {
         )
 
     }
-
+    // ant drawer control
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => { setIsModalOpen(true) };
+    const handleOk = () => { setIsModalOpen(false) };
+    const handleCancel = () => { setIsModalOpen(false) };
 
-    const showModal = () => {
-        setIsModalOpen(true);
+    //handle ant Form
+    const onFinish = (values: any) => { console.log('Success:', values) };
+    const onFinishFailed = (errorInfo: any) => {
+        // setError(true)
+        console.log('Failed:', errorInfo)
     };
+    const { token } = theme.useToken();
+    const onChange = (value: number) => {
+        console.log('onChange', value)
+        setCurrent(value)
+    }
+    //Handle buttons
+    const next = () => { setCurrent(current + 1) };
+    const prev = () => { setCurrent(current - 1) };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
+    // When press Sec in Imzalayanlar
     const handleStep4Sec = (item: any) => {
         setIsModalOpen(false)
         dispatch(setStep4_imza(item))
     }
+    //Remove imza table
     const handleRemoveImza = (id: number) => {
         dispatch(setStep4_RemoveImza(id))
     }
-    const { token } = theme.useToken();
-    const [current, setCurrent] = useState(0);
-    const onChange = (value: number) => {
-        console.log('onChange', value)
-        setCurrent(value)
-
-    }
-    const next = () => {
-        setCurrent(current + 1);
-    };
-
-    const prev = () => {
-        setCurrent(current - 1);
-    };
 
     // STEP1 STATUS CONTROL ---wait,process,finish
     const controlStep1 = (object: myStep1, currentStep: number) => {
         const empty = Object.values(object).some((item: string | boolean) => item == '')
         const finish = Object.values(object).every((item: string | boolean) => item !== '')
-        if (currentStep != 0 && empty) {
-            return 'wait'
+        if (empty && error && current != 0) {
+            return 'error'
         } else if (currentStep != 0 && finish) {
             return 'finish'
         } else if (currentStep == 0) {
             return 'process'
+        } else if (currentStep != 0 && empty) {
+            return 'wait'
         }
     }
 
@@ -114,12 +105,14 @@ function MyAntStep() {
     const controlStep2 = (object: myStep2, currentStep: number) => {
         const empty = Object.values(object).some((item: string | string[]) => item == '' || item.length == 0)
         const finish = Object.values(object).every((item: string | string[]) => item !== '' || item.length != 0)
-        if (currentStep != 1 && empty) {
-            return 'wait'
+        if (empty && error && current != 1) {
+            return 'error'
         } else if (currentStep != 1 && finish) {
             return 'finish'
         } else if (currentStep == 1) {
             return 'process'
+        } else if (currentStep != 1 && empty) {
+            return 'wait'
         }
     }
 
@@ -127,21 +120,17 @@ function MyAntStep() {
     const controlStep4 = (object: myStep4, currentStep: number) => {
         const empty = Object.keys(object.imzalama).length == 0
         const finish = Object.entries(object.imzalama).length > 0
-        if (currentStep != 3 && empty) {
-            return 'wait'
+        if (empty && error && current != 3) {
+            return 'error'
         } else if (currentStep != 3 && finish) {
             return 'finish'
         } else if (currentStep == 3) {
             return 'process'
+        } else if (currentStep != 3 && empty) {
+            return 'wait'
         }
     }
-    const controlError = (status: string | undefined) => {
-        if (status == 'wait') {
-            return 'error'
-        }
-    }
-
-
+//My main step array
     const steps = [
         {
             title: 'Əsas Məlumatlar',
@@ -186,7 +175,6 @@ function MyAntStep() {
                 </div>
 
             </div>,
-            // status: current !== 0 ? controlError(controlStep1(step1, current)) : controlStep1(step1, current)
             status: controlStep1(step1, current)
 
         },
@@ -297,26 +285,18 @@ function MyAntStep() {
     //Notification
     const [api, contextHolder] = notification.useNotification();
     const openNotification = () => {
-
-
-        if (step1.teyinat !== ''
-            && step1.tesnifat !== ''
-            && step1.mezmun !== ''
-            && step2.emrinMezmunu !== ''
-            && step2.preambula !== ''
-            && step2.bendler.length !== 0
-        ) {
+        const step1Empty = Object.values(step1).some((item: string | boolean) => item == '')
+        const step2Empty = Object.values(step2).some((item: string | string[]) => item == '')
+        const step4Empty = Object.keys(step4.imzalama).length == 0
+        if (!step1Empty && !step2Empty && !step4Empty) {
             api.open({
                 message: `237191873419827391823 sənədi qeydiyyata alınıb."Əmr/Sərəncam/Qərar hazırlanması" tapşırığı yaradılıb`,
                 duration: 0,
                 icon: <MdOutlineDownloadDone />,
                 className: 'black',
                 btn: <Link to='/mainInfo' ><button className='sablon'>Tapşırığı aç</button></Link>
-
             });
-        } else {
-            alert('steps are red))')
-        }
+        } else { setError(true) }
     };
     return (
         <>
@@ -380,7 +360,6 @@ function MyAntStep() {
                         <div className={current == 0 ? 'flex' : 'f'}>
                             <p>Məzmun</p>
                             <Form.Item
-                                // className='form'
                                 name='Məzmun'
                                 rules={[
                                     {
@@ -407,10 +386,6 @@ function MyAntStep() {
                 </div >
                 {steps[current].div2}
 
-
-
-
-
                 {/* Buttons */}
                 <div style={{ marginTop: 24 }
                 }>
@@ -428,7 +403,6 @@ function MyAntStep() {
                             </Button>
                         )
                     }
-
                     {
                         Object.keys(step4.imzalama).length !== 0 && (
                             <Form.Item>
