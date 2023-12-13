@@ -1,3 +1,4 @@
+import { nanoid } from '@reduxjs/toolkit';
 import type { CollapseProps } from 'antd';
 import { Collapse, Empty } from 'antd';
 import { useRef, useState } from "react";
@@ -6,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setStep2_bendler, setStep2_edit, setStep2_emrMezmun, setStep2_esasMetn, setStep2_preambula, setStep2_remove } from '../../store/slices/mainInfoSlice';
 import './MyAntAccordion.css';
-import { nanoid } from '@reduxjs/toolkit';
 
 
 

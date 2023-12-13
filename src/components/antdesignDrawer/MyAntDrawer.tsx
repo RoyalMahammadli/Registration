@@ -1,7 +1,7 @@
 import { Button, Drawer, Space } from 'antd';
 import { useState } from 'react';
 import MyAntStep from '../antdesignStep/MyAntStep';
-import './MyAntDrawer.css'
+import './MyAntDrawer.css';
 
 function MyAntDrawer() {
     const [open, setOpen] = useState(false);

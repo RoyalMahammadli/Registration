@@ -6,7 +6,7 @@
 .flex {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   width: 43%;
   margin: 1rem 0;
   position: relative;
@@ -138,6 +138,9 @@ h3 {
 }
 :where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class*=" ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class*=" ant-notification"]{
   color: white;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-form-item .ant-form-item-control-input {
+  align-items: normal;
 }
 .cicircleRemove{
   font-size: 1.3rem;

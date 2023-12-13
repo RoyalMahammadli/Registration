@@ -135,6 +135,11 @@ function MyAntStep() {
             return 'process'
         }
     }
+    const controlError = (status: string | undefined) => {
+        if (status == 'wait') {
+            return 'error'
+        }
+    }
 
 
     const steps = [
@@ -181,6 +186,7 @@ function MyAntStep() {
                 </div>
 
             </div>,
+            // status: current !== 0 ? controlError(controlStep1(step1, current)) : controlStep1(step1, current)
             status: controlStep1(step1, current)
 
         },
@@ -291,6 +297,8 @@ function MyAntStep() {
     //Notification
     const [api, contextHolder] = notification.useNotification();
     const openNotification = () => {
+
+
         if (step1.teyinat !== ''
             && step1.tesnifat !== ''
             && step1.mezmun !== ''
@@ -307,7 +315,7 @@ function MyAntStep() {
 
             });
         } else {
-            alert("Enter the required inputs")
+            alert('steps are red))')
         }
     };
     return (
@@ -347,7 +355,6 @@ function MyAntStep() {
                         <div className={current == 0 ? 'flex' : 'f'}>
                             <p>Təsnifat</p>
                             <Form.Item
-
                                 name='Təsnifat'
                                 rules={[
                                     {
