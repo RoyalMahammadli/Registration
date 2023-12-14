@@ -1,3 +1,21 @@
+.app{
+  background-color: #eeeff6;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
 .ant-drawer .ant-drawer-content {
   background-color: #eeeff6;
+}
+.app button{
+  background-color: #518863;
+  color: white;
+  transition: .4s all;
+  border: 1px solid #518863;
+}
+.app button:hover{
+  border: 1px solid #518863 !important;
+  color: #518863 !important;
+  background-color: white;
+
 }

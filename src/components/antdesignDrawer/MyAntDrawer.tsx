@@ -4,25 +4,25 @@ import MyAntStep from '../antdesignStep/MyAntStep';
 import './MyAntDrawer.css';
 
 function MyAntDrawer() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const showLargeDrawer = () => { setOpen(true) };
     const onClose = () => { setOpen(false) };
     return (
-        <div >
+        <div  className='app'>
             <Space>
-                <Button type="primary" onClick={showLargeDrawer}>
-                    Task
+                <Button type="default" onClick={showLargeDrawer}>
+                Əməliyyatlar
                 </Button>
             </Space>
             <Drawer
                 className='antDrawer'
-                title={` Drawer`}
+                title={` Əməliyyatlar`}
                 placement="right"
                 onClose={onClose}
                 open={open}
                 width='70rem'
             >
-                <MyAntStep />
+                <MyAntStep onClose={onClose} />
             </Drawer>
         </div>
     )

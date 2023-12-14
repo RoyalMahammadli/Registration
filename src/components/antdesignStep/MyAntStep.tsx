@@ -12,7 +12,7 @@ import MyAntAccordion from '../antdesignAccordion/MyAntAccordion';
 import MyUpload from '../antdesignUpload/MyUpload';
 import './MyAntStep.css';
 
-function MyAntStep() {
+function MyAntStep({ onClose }: any) {
     const [current, setCurrent] = useState<number>(0);
     const [error, setError] = useState<boolean>(false)
     const dispatch = useDispatch()
@@ -130,7 +130,7 @@ function MyAntStep() {
             return 'wait'
         }
     }
-//My main step array
+    //My main step array
     const steps = [
         {
             title: 'Əsas Məlumatlar',
@@ -141,9 +141,7 @@ function MyAntStep() {
                     <option value='Ümumi'>Ümumi</option>
                     <option value="Apellasiya şurası">Apellasiya şurası</option>
                     <option value="Təhlükəsizlik şurası">Təhlükəsizlik şurası</option>
-                </select>
-
-            ,
+                </select>,
             tesnifat: <select value={step1.tesnifat} onChange={setTesnifatWithNomenklatur}>
                 <option selected className={step1.tesnifat !== '' ? 'none' : 'block'} disabled value=''>Seçin</option>
                 <option value='Digər'>Digər</option>
@@ -185,7 +183,7 @@ function MyAntStep() {
             konfidensial: step1.konfidensial ? "Bəli" : "Xeyr",
             mezmun: `:${step1.mezmun}`,
             div2: <div className='content'>
-                <MyAntAccordion />
+                <MyAntAccordion error={error} />
             </div>,
             status: controlStep2(step2, current)
 
@@ -309,7 +307,6 @@ function MyAntStep() {
                 initialValues={{ remember: true }}
             >
                 <div className='content' style={contentStyle}>
-
                     <h2>{steps[current].title}</h2>
                     <div className={current == 0 ? 'flex' : 'none'}>
                         <p>Təyinatı</p>
@@ -326,8 +323,8 @@ function MyAntStep() {
                                 }
                             ]}
                         >
-
                             {steps[current].teyinat}
+
                         </Form.Item>
                     </div>
                     <div className={current !== 0 ? 'content-wrap' : ''}>
@@ -338,8 +335,8 @@ function MyAntStep() {
                                 name='Təsnifat'
                                 rules={[
                                     {
-                                        required: current === 0 ? true : false,
-                                        message: current === 0 ? 'Please include some information' : ''
+                                        required: current ===0 && error && true,
+                                        message: 'Please include some information'
                                     },
                                     {
                                         type: 'string', message: 'Please include'
@@ -363,7 +360,7 @@ function MyAntStep() {
                                 name='Məzmun'
                                 rules={[
                                     {
-                                        required: current === 0 ? true : false,
+                                        required: true,
                                         message: current === 0 ? 'Please include some information' : '',
 
                                     },
@@ -387,8 +384,14 @@ function MyAntStep() {
                 {steps[current].div2}
 
                 {/* Buttons */}
-                <div style={{ marginTop: 24 }
-                }>
+                <div className='bottom_buttons'>
+                    {
+
+                        <Button style={{ margin: '0 8px' }} onClick={onClose}>
+                            İmtina et
+                        </Button>
+
+                    }
                     {
                         current > 0 && (
                             <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
@@ -405,9 +408,11 @@ function MyAntStep() {
                     }
                     {
                         Object.keys(step4.imzalama).length !== 0 && (
-                            <Form.Item>
+                            <Form.Item
+
+                            >
                                 {contextHolder}
-                                <Button htmlType='submit' onClick={openNotification}>
+                                <Button className='qeydiyyat_btn' htmlType='submit' onClick={openNotification}>
                                     Qeydiyyata al
                                 </Button>
                             </Form.Item>

@@ -6,7 +6,6 @@
 .flex {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
   width: 43%;
   margin: 1rem 0;
   position: relative;
@@ -133,17 +132,36 @@ h3 {
   background-color: #515767;
   color: white;
 }
-:where(.css-dev-only-do-not-override-2i2tap).ant-notification .ant-notification-notice-wrapper .ant-notification-notice-with-icon .ant-notification-notice-message{
+:where(.css-dev-only-do-not-override-2i2tap).ant-notification .ant-notification-notice-wrapper .ant-notification-notice-with-icon .ant-notification-notice-message {
   color: white;
 }
-:where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class^="ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class*=" ant-notification"], :where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class*=" ant-notification"]{
+:where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class^="ant-notification"],
+:where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class^="ant-notification"],
+:where(.css-dev-only-do-not-override-2i2tap)[class^="ant-notification"] [class*=" ant-notification"],
+:where(.css-dev-only-do-not-override-2i2tap)[class*=" ant-notification"] [class*=" ant-notification"] {
   color: white;
 }
 :where(.css-dev-only-do-not-override-2i2tap).ant-form-item .ant-form-item-control-input {
   align-items: normal;
 }
-.cicircleRemove{
+.cicircleRemove {
   font-size: 1.3rem;
   color: red;
   cursor: pointer;
+}
+.bottom_buttons {
+  margin-top: 1rem;
+  display: flex;
+}
+.qeydiyyat_btn {
+  margin: 0 0.5rem;
+  background-color: #518863;
+  color: white;
+  transition: .4s all;
+  border: 1px solid #518863;
+}
+.qeydiyyat_btn:hover {
+  background-color: white;
+  color: #518863 !important;
+  border: 1px solid #518863 !important;
 }

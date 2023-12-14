@@ -9,7 +9,7 @@ import { setStep2_bendler, setStep2_edit, setStep2_emrMezmun, setStep2_esasMetn,
 import './MyAntAccordion.css';
 
 
-function MyAntAccordion() {
+function MyAntAccordion({ error }: any) {
     const [order, setOrder] = useState<string>('')
     const [change, setChange] = useState<boolean>(true)
     const ereaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -41,6 +41,10 @@ function MyAntAccordion() {
     //Getting Emrin mezmunu value
     const handleEmrMezmun = (e: any) => {
         dispatch(setStep2_emrMezmun(e.target.value))
+        if (emrinMezmunu == '' && error){
+           //------------------
+        }
+
     }
     //Getting Preambula value
     const handlePreambula = (e: any) => {

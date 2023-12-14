@@ -1,6 +1,5 @@
 .dashboard {
-  width: 80%;
-  margin: 5rem auto;
+  width: 100%;
   border: 1px solid #323747;
   background-color: #323747;
   display: grid;
